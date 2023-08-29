@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }) {
             const dbUser = (await db.get(`user:${token.id}`)) as User | null
 
-            if(!dbUser) {
+            if (!dbUser) {
                 token.id = user!.id
 
                 return token
@@ -50,8 +50,8 @@ export const authOptions: NextAuthOptions = {
                 picture: dbUser.image,
             }
         },
-        async session({session, token}) {
-            if(token) {
+        async session({ session, token }) {
+            if (token) {
                 session.user.id = token.id
                 session.user.name = token.name
                 session.user.email = token.email
@@ -60,5 +60,8 @@ export const authOptions: NextAuthOptions = {
 
             return session
         },
+        redirect() {
+            return '/dashboard'
+        }
     }
 }
