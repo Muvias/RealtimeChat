@@ -32,9 +32,14 @@ export async function POST(req: Request) {
 
         // Checar se já foi enviada a solicitação de amizade
         const isAlreadyAdded = (await fetchRedis('sismember', `user:${idToAdd}:incoming_friend_requests`, session.user.id)) as 0 | 1
+        const PendingRequest = (await fetchRedis('sismember', `user:${session.user.id}:incoming_friend_requests`, idToAdd)) as 0 | 1
 
         if (isAlreadyAdded) {
             return new Response('A solicitação já foi enviada para este usuário.', { status: 400 })
+        }
+
+        if (PendingRequest) {
+            return new Response('Você tem uma solicitação de amizade pendente deste usuário.', { status: 400 })
         }
 
         // Checar se o usuário já está adicionado
