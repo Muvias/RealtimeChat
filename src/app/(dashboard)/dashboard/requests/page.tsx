@@ -25,7 +25,7 @@ export default async function requests() {
 
     return (
         <main className="pt-8">
-            <h2 className="font-bold text-5xl mb-8">Adicionar amigo</h2>
+            <h2 className="font-bold text-5xl mb-8">Pedidos de amizade</h2>
 
             <div className="flex flex-col gap-4">
                 <FriendRequests incomingFriendRequests={incomingFriendRequests} sessionId={session.user.id} />

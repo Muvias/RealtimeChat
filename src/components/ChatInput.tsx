@@ -19,6 +19,8 @@ export default function ChatInput({ chatPartner, chatId }: ChatInputProps) {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     async function sendMessage() {
+        if (!input) return
+
         setIsLoading(true)
 
         try {
@@ -67,6 +69,7 @@ export default function ChatInput({ chatPartner, chatId }: ChatInputProps) {
                             type='submit'
                             onClick={sendMessage}
                             isLoading={isLoading}
+                            disabled={input === ''}
                         >
                             Enviar
                         </Button>

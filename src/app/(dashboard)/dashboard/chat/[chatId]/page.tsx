@@ -78,7 +78,13 @@ export default async function chat({ params }: ChatProps) {
                 </div>
             </div>
 
-            <Messages initialMessages={initialMessages} sessionId={session.user.id} />
+            <Messages
+                chatId={chatId}
+                initialMessages={initialMessages}
+                sessionId={session.user.id}
+                sessionImg={session.user.image}
+                chatPartner={chatPartner}
+            />
             <ChatInput
                 chatId={chatId}
                 chatPartner={chatPartner}
