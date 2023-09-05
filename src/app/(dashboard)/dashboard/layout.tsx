@@ -8,18 +8,15 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { fetchRedis } from "@/helpers/redis";
 
-import { Icon, Icons } from "@/components/icons/Icons";
 import SignOutButton from "@/components/SignOutButton";
 import FriendRequestsSidebarOptions from "@/components/FriendRequestsSidebarOptions";
 import getFriendsByUserId from "@/helpers/get-friends-by-user-id";
 import SidebarChatList from "@/components/SidebarChatList";
+import MobileChatLayout from "@/components/MobileChatLayout";
 
-interface SidebarOption {
-    id: number
-    name: string
-    href: string
-    Icon: Icon
-}
+import logo from '@/../public/logo.png'
+import { Icons } from "@/components/icons/Icons";
+import { SidebarOption } from "@/types/typings";
 
 const siderbarOptions: SidebarOption[] = [
     {
@@ -41,9 +38,17 @@ export default async function DashboardLayout({ children }: { children: ReactNod
 
     return (
         <div className="w-full flex h-screen">
-            <div className="flex flex-col grow max-w-xs w-full h-full px-6 gap-y-5 overflow-y-auto border-r border-gray-200 bg-white">
-                <Link href='/dashboard' className="flex items-center h-16 shrink-0">
-                    <Icons.Logo className="h-8 w-auto text-indigo-600" />
+            <div className="md:hidden">
+                <MobileChatLayout
+                    session={session}
+                    friends={friends}
+                    unseenRequestCount={unseenRequestCount}
+                    sidebarOptions={siderbarOptions}
+                />
+            </div>
+            <div className="hidden md:flex flex-col grow max-w-xs w-full h-full px-6 gap-y-5 overflow-y-auto border-r border-gray-200 bg-white">
+                <Link href='/dashboard' className="flex h-16 mt-2 shrink-0">
+                    <Image src={logo} alt='Real Time Chat logo' className="h-16 w-auto text-indigo-600 hover:scale-105 transition-all" />
                 </Link>
 
                 {friends.length > 0 ? (
@@ -71,7 +76,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
 
                                     return (
                                         <li key={option.id}>
-                                            <Link href={option.href} className="flex py-2 gap-3 rounded-md text-sm leading-6 font-semibold text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group">
+                                            <Link href={option.href} className="flex p-2 gap-3 rounded-md text-sm leading-6 font-semibold text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group">
                                                 <span className="flex items-center justify-center h-6 w-6 shrink-0 rounded-lg border text-[0.625rem] font-medium text-gray-400 bg-white border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600 transition-colors">
                                                     <Icon className="h-4 w-4" />
                                                 </span>
@@ -125,7 +130,9 @@ export default async function DashboardLayout({ children }: { children: ReactNod
                 </nav>
             </div>
 
-            {children}
+            <aside className="max-h-screen container py-16 md:py-12 w-full">
+                {children}
+            </aside>
         </div>
     )
 }

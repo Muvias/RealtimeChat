@@ -35,7 +35,7 @@ export default function FriendRequests({ incomingFriendRequests, sessionId }: Fr
             pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`))
             pusherClient.unbind('incoming_friend_requests', FriendRequestHandler)
         }
-    }, [])
+    }, [sessionId])
 
     async function acceptFriend(senderId: string) {
         await axios.post('/api/friends/accept', { id: senderId })
