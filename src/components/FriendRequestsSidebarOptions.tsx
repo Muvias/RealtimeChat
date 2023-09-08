@@ -37,7 +37,6 @@ export default function FriendRequestsSidebarOptions({ sessionId, initialUnseenR
 
             pusherClient.unbind('incoming_friend_requests', FriendRequestHandler)
             pusherClient.unbind('new_friend', addedFriendHandler)
-
         }
     }, [sessionId])
 

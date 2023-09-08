@@ -24,7 +24,13 @@ const siderbarOptions: SidebarOption[] = [
         name: 'Adicionar amigo',
         href: '/dashboard/add',
         Icon: 'UserPlus'
-    }
+    },
+    {
+        id: 2,
+        name: 'Remover amigo',
+        href: '/dashboard/remove',
+        Icon: 'UserMinus'
+    },
 ]
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {

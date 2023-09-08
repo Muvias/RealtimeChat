@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth"
 import { messageArrayValidator } from "@/lib/validations/message"
 import { fetchRedis } from "@/helpers/redis"
 import { authOptions } from "@/lib/auth"
-import { db } from "@/lib/db"
 
 import ChatInput from "@/components/ChatInput"
 import Messages from "@/components/Messages"
