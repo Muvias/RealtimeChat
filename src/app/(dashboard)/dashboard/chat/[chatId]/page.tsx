@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/auth"
 
 import ChatInput from "@/components/ChatInput"
 import Messages from "@/components/Messages"
+import ChatOptions from "@/components/ChatOptions"
 
 interface ChatProps {
     params: {
@@ -51,7 +52,7 @@ export default async function chat({ params }: ChatProps) {
     return (
         <div className="flex flex-col flex-1 justify-between h-full max-h-[calc(100vh-2rem)]">
             <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
-                <div className="relative flex items-center space-x-4">
+                <div className="relative flex items-center space-x-2 sm:space-x-4">
                     <div className="relative">
                         <div className="relative w-8 sm:w-12 h-8 sm:h-12">
                             <Image
@@ -76,6 +77,9 @@ export default async function chat({ params }: ChatProps) {
                         </span>
                     </div>
                 </div>
+
+                {/* opções do chat */}
+                <ChatOptions chatId={chatId} />
             </div>
 
             <Messages

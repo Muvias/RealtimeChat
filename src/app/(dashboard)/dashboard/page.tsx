@@ -1,13 +1,14 @@
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
+import Link from "next/link";
+import Image from "next/image";
+
 import { authOptions } from "@/lib/auth";
 import getFriendsByUserId from "@/helpers/get-friends-by-user-id";
 import { fetchRedis } from "@/helpers/redis";
 import { chatHrefConstructor } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
 
 export default async function dashboard() {
     const session = await getServerSession(authOptions)
@@ -18,7 +19,7 @@ export default async function dashboard() {
     const friendsWithLastMessage = await Promise.all(
         friends.map(async (friend) => {
             const [lastMessageRaw] = (await fetchRedis('zrange', `chat:${chatHrefConstructor(session.user.id, friend.id)}:messages`, -1, -1)) as string[]
-            const lastMessage = JSON.parse(lastMessageRaw) as Message
+            const lastMessage = lastMessageRaw && lastMessageRaw.length > 0 ? JSON.parse(lastMessageRaw) as Message : null
 
             return {
                 ...friend,
@@ -65,10 +66,10 @@ export default async function dashboard() {
 
                             <p className="mt-1 max-w-md">
                                 <span className="text-zinc-400">
-                                    {friend.lastMessage.senderId === session.user.id ? 'Você: ' : ''}
+                                    {friend.lastMessage?.senderId === session.user.id ? 'Você: ' : ''}
                                 </span>
 
-                                {friend.lastMessage.text}
+                                {friend.lastMessage?.text}
                             </p>
 
                         </div>

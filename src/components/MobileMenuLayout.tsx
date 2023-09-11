@@ -26,7 +26,7 @@ interface MobileChatLayoutProps {
     unseenRequestCount: number
 }
 
-export default function MobileChatLayout({ friends, session, sidebarOptions, unseenRequestCount }: MobileChatLayoutProps) {
+export default function MobileMenuLayout({ friends, session, sidebarOptions, unseenRequestCount }: MobileChatLayoutProps) {
     const [open, setOpen] = useState<boolean>(false)
 
     const pathname = usePathname()

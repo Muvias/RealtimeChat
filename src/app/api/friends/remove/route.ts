@@ -17,7 +17,7 @@ export async function POST(req: Request) {
             return new Response('Unauthorized', { status: 401 })
         }
 
-        // Verificar se os usuários ainda não são amigos
+        // Certificar que os usuários são amigos
         const isAlreadyFriends = await fetchRedis('sismember', `user:${session.user.id}:friends`, idToRemove)
 
         if (!isAlreadyFriends) {

@@ -1,9 +1,11 @@
 'use client'
 
+import { useEffect, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+
 import { pusherClient } from "@/lib/pusher"
 import { chatHrefConstructor, toPusherKey } from "@/lib/utils"
-import { usePathname, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+
 import { toast } from "react-hot-toast"
 import UnseenChatToast from "./UnseenChatToast"
 
@@ -23,7 +25,6 @@ export default function SidebarChatList({ sessionId, friends }: SidebarChatList)
 
     const [unseenMessages, setUnseenMessages] = useState<Message[]>([])
     const [activeChats, setActiveChats] = useState<User[]>(friends)
-
 
     useEffect(() => {
         pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`))

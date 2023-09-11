@@ -12,7 +12,7 @@ import SignOutButton from "@/components/SignOutButton";
 import FriendRequestsSidebarOptions from "@/components/FriendRequestsSidebarOptions";
 import getFriendsByUserId from "@/helpers/get-friends-by-user-id";
 import SidebarChatList from "@/components/SidebarChatList";
-import MobileChatLayout from "@/components/MobileChatLayout";
+import MobileMenuLayout from "@/components/MobileMenuLayout";
 
 import logo from '@/../public/logo.png'
 import { Icons } from "@/components/icons/Icons";
@@ -45,7 +45,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
     return (
         <div className="w-full flex h-screen">
             <div className="md:hidden">
-                <MobileChatLayout
+                <MobileMenuLayout
                     session={session}
                     friends={friends}
                     unseenRequestCount={unseenRequestCount}
@@ -53,9 +53,9 @@ export default async function DashboardLayout({ children }: { children: ReactNod
                 />
             </div>
             <div className="hidden md:flex flex-col grow max-w-xs w-full h-full px-6 gap-y-5 overflow-y-auto border-r border-gray-200 bg-white">
-                <Link href='/dashboard' className="flex h-16 mt-2 shrink-0">
+                <a href='/dashboard' className="flex h-16 mt-2 shrink-0">
                     <Image src={logo} alt='Real Time Chat logo' className="h-16 w-auto text-indigo-600 hover:scale-105 transition-all" />
-                </Link>
+                </a>
 
                 {friends.length > 0 ? (
                     <div className="text-xs font-semibold leading-6 text-gray-400">
