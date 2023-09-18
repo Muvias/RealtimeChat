@@ -60,9 +60,8 @@ export default function Messages({ initialMessages, sessionId, sessionImg, chatI
                 }
 
                 return (
-                    <ContextMenu.Root>
+                    <ContextMenu.Root key={`${message.id}-${message.timestamp}`}>
                         <ContextMenu.Trigger
-                            key={`${message.id}-${message.timestamp}`}
                             className="chat-message"
                         >
                             <div
