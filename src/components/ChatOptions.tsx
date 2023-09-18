@@ -40,10 +40,10 @@ export default function ChatOptions({ chatId }: ChatOptionsProps) {
             <DropdownMenu.Trigger className='py-1 mr-2 text-zinc-600 hover:text-zinc-900 transition-colors'>
                 <MoreVertical />
             </DropdownMenu.Trigger>
-            <DropdownMenu.Content className='p-2 mr-1 border rounded-sm shadow-lg bg-white'>
+            <DropdownMenu.Content className='p-2 mr-1 border rounded-md shadow-lg bg-white'>
                 <AlertDialog.Root>
                     <AlertDialog.Trigger asChild>
-                        <button className="px-4 py-1 font-medium leading-6 rounded-sm text-red-500 hover:bg-red-100 shadow-zinc-400 focus:shadow-red-200 focus:shadow-[0_0_0_2px] outline-none transition-colors">
+                        <button className="px-4 py-2 font-medium leading-4 rounded-sm text-red-500 hover:bg-red-100 shadow-zinc-400 focus:shadow-red-200 focus:shadow-[0_0_0_2px] outline-none transition-colors">
                             Excluir
                         </button>
                     </AlertDialog.Trigger>
@@ -54,7 +54,7 @@ export default function ChatOptions({ chatId }: ChatOptionsProps) {
                                 Você tem certeza?
                             </AlertDialog.Title>
                             <AlertDialog.Description className="text-zinc-600 mt-4 mb-5 text-[15px] leading-normal">
-                                Essa ação não pode ser desfeita.
+                                Essa ação não pode ser desfeita e ocorrerá para ambos os participantes da conversa.
                             </AlertDialog.Description>
                             <div className="flex justify-end gap-[25px]">
                                 <AlertDialog.Cancel asChild>
