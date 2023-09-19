@@ -21,7 +21,7 @@ export default function ChatOptions({ chatId }: ChatOptionsProps) {
         setIsLoading(true)
 
         try {
-            await axios.post('/api/message/clear', { chatId })
+            await axios.post('/api/message/deleteAll', { chatId })
 
             router.push('/dashboard')
             
