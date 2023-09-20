@@ -4,6 +4,8 @@ import { db } from "@/lib/db"
 import { authOptions } from "@/lib/auth"
 import { z } from "zod"
 import { fetchRedis } from "@/helpers/redis"
+import { pusherServer } from "@/lib/pusher"
+import { toPusherKey } from "@/lib/utils"
 
 export async function POST(req: Request) {
     try {
@@ -32,6 +34,8 @@ export async function POST(req: Request) {
         if (!messageToRemove) {
             return new Response('Mensagem não encontrada', { status: 404 })
         }
+
+        await pusherServer.trigger(toPusherKey(`chat:${chatId}`), 'message-removal', messageId)
 
         await db.zrem(`chat:${chatId}:messages`, messageToRemove);
 

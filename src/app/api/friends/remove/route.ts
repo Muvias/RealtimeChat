@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { fetchRedis } from "@/helpers/redis"
+import { pusherServer } from "@/lib/pusher"
+import { toPusherKey } from "@/lib/utils"
 
 export async function POST(req: Request) {
     try {
@@ -24,7 +26,17 @@ export async function POST(req: Request) {
             return new Response('Vocês não são amigos.', { status: 400 })
         }
 
+        const [userRaw, friendRaw] = (await Promise.all([
+            fetchRedis('get', `user:${session.user.id}`),
+            fetchRedis('get', `user:${idToRemove}`)
+        ])) as [string, string]
+
+        const user = JSON.parse(userRaw) as User
+        const friend = JSON.parse(friendRaw) as User
+
         await Promise.all([
+            pusherServer.trigger(toPusherKey(`user:${idToRemove}:friends`), 'removed_friend', user),
+            pusherServer.trigger(toPusherKey(`user:${session.user.id}:friends`), 'removed_friend', friend),
             db.srem(`user:${session.user.id}:friends`, idToRemove),
             db.srem(`user:${idToRemove}:friends`, session.user.id)
         ])

@@ -40,11 +40,17 @@ export default function Messages({ initialMessages, sessionId, sessionImg, chatI
             setMessages((prev) => [message, ...prev])
         }
 
+        function removedMessageHandler(messageId: string) {
+            setMessages((prevMessages) => prevMessages.filter((message) => message.id !== messageId))
+        }
+
         pusherClient.bind('incoming-message', messageHandler)
+        pusherClient.bind('message-removal', removedMessageHandler)
 
         return () => {
             pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`))
             pusherClient.unbind('incoming-message', messageHandler)
+            pusherClient.unbind('message-removal', removedMessageHandler)
         }
     }, [chatId])
 
@@ -53,8 +59,6 @@ export default function Messages({ initialMessages, sessionId, sessionImg, chatI
 
         try {
             await axios.post('/api/message/delete', { chatId, messageId })
-
-            setMessages((prevMessages) => prevMessages.filter((message) => message.id !== messageId))
 
             toast.success('Mensagem apagada com sucesso.')
         } catch (error) {
