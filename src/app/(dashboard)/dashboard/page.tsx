@@ -37,7 +37,7 @@ export default async function dashboard() {
             ) : friendsWithLastMessage.map((friend) => (
                 <div
                     key={friend.id}
-                    className="relative p-3 rounded-md bg-zinc-50 border-zinc-200 hover:bg-zinc-100 transition-colors"
+                    className="relative p-3 mb-2 rounded-md bg-zinc-50 border-zinc-200 hover:bg-zinc-100 transition-colors"
                 >
                     <div className="absolute flex items-center right-4 inset-y-0">
                         <ChevronRight className="h-7 w-7 text-zinc-400" />

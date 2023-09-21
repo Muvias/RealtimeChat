@@ -44,13 +44,19 @@ export default function Messages({ initialMessages, sessionId, sessionImg, chatI
             setMessages((prevMessages) => prevMessages.filter((message) => message.id !== messageId))
         }
 
+        function deleteChatHandler() {
+            setMessages([])
+        }
+
         pusherClient.bind('incoming-message', messageHandler)
         pusherClient.bind('message-removal', removedMessageHandler)
+        pusherClient.bind('delete-chat', deleteChatHandler)
 
         return () => {
             pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`))
             pusherClient.unbind('incoming-message', messageHandler)
             pusherClient.unbind('message-removal', removedMessageHandler)
+            pusherClient.unbind('delete-chat', deleteChatHandler)
         }
     }, [chatId])
 

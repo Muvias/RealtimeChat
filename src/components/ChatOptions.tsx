@@ -26,8 +26,6 @@ export default function ChatOptions({ chatId }: ChatOptionsProps) {
             router.push('/dashboard')
             
             toast.success('Mensagens apagadas com sucesso')
-
-            router.refresh()
         } catch (error) {
             toast.error('Algo deu errado. Por favor tente novamente mais tarde.')
         } finally {

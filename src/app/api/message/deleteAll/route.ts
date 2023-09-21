@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth"
 import { db } from "@/lib/db"
 import { authOptions } from "@/lib/auth"
 import { z } from "zod"
+import { pusherServer } from "@/lib/pusher"
+import { toPusherKey } from "@/lib/utils"
 
 export async function POST(req: Request) {
     try {
@@ -19,6 +21,8 @@ export async function POST(req: Request) {
         if (session.user.id !== userId1 && session.user.id !== userId2) {
             return new Response('Unauthorized', { status: 401 })
         }
+
+        await pusherServer.trigger(toPusherKey(`chat:${chatId}`), 'delete-chat', {})
 
         await db.del(`chat:${chatId}:messages`)
 
