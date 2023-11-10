@@ -101,12 +101,12 @@ export default function Messages({ initialMessages, sessionId, sessionImg, chatI
                                 })}
                             >
                                 <ContextMenu.Trigger
-                                    className={cn('flex flex-col space-y-2 text-base max-w-xs mx-2', {
+                                    className={cn('flex flex-col space-y-2 text-base flex-1 mx-2', {
                                         'order-1 items-end': isCurrentUser,
                                         'order-2 items-start': !isCurrentUser,
                                     })}
                                 >
-                                    <span className={cn('px-4 py-2 rounded-lg inline-block', {
+                                    <span className={cn('px-4 py-2 rounded-lg break-all max-w-3xl', {
                                         'bg-indigo-600 text-white': isCurrentUser,
                                         'bg-gray-200 text-gray-900': !isCurrentUser,
                                         'rounded-br-none': !hasNextMessageFromSameUser && isCurrentUser,
@@ -120,7 +120,7 @@ export default function Messages({ initialMessages, sessionId, sessionImg, chatI
                                 </ContextMenu.Trigger>
 
                                 <div className={cn('relative w-6 h-6', {
-                                    'order-2': isCurrentUser,
+                                    'invisible sm:visible sm:order-2': isCurrentUser,
                                     'order-1': !isCurrentUser,
                                     'invisible': hasNextMessageFromSameUser,
                                 })}>
